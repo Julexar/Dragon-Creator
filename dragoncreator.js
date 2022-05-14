@@ -43,7 +43,7 @@ var Dragoncreator = Dragoncreator || (function() {
 		            create(args[1],args[2],args[3]);
 		            break;
 		        case '!setname':
-		            state.dragon.now.name=args[1];
+		            setname(args[1]);
 		            creatormenu();
 		            break;
 		        case '!setage':
@@ -105,6 +105,7 @@ var Dragoncreator = Dragoncreator || (function() {
 		            break;
 		        case '!setsize':
 		            setsize(args[1]);
+		            setname();
 		            creatormenu();
 		            break;
 		        case '!setpersonality':
@@ -134,16 +135,16 @@ var Dragoncreator = Dragoncreator || (function() {
             '<div style="text-align:center;">Current Dragon</div>' + //--
             '<tr><td>Name: </td><td><a ' + astyle1 + '" href="!setname,?{Name?|New Name}">' + state.dragon.now.name + '</a></td></tr>' + //--
             '<tr><td>Gender: </td><td><a ' + astyle1 + '" href="!setgender,?{Gender?|Male|Female|Random},' + state.dragon.now.gender + '">' + state.dragon.now.gender + '</a></td></tr>' + //--
-            '<tr><td>Type & Size: </td><td><a ' + astyle1 + '" href="!settypesize,?{Type?|Amethyst|Black|Blue|Bronze|Copper|Crystal|Emerald|Gold|Red|Sapphire|Silver|Topaz|White|Random},?{Size?|Wyrmling|Young|Adult|Ancient|Greatwyrm|Random},' + '">' + state.dragon.now.size + ' ' + state.dragon.now.type + ' Dragon' + '</a></td></tr>' + //--
+            '<tr><td>Type & Size: </td><td><a ' + astyle1 + '" href="!settypesize,?{Type?|Amethyst|Black|Blue|Brass|Bronze|Copper|Crystal|Emerald|Gold|Green|Red|Sapphire|Silver|Topaz|White|Random},?{Size?|Wyrmling|Young|Adult|Ancient|Greatwyrm|Random},' + '">' + state.dragon.now.size + ' ' + state.dragon.now.type + ' Dragon' + '</a></td></tr>' + //--
             '<tr><td>Terrain: </td><td><a ' + astyle1 + '" href="!setterrain,?{Terrain?|Desert|Arctic|Mountain|Forest|Swamp|Plains|Random},' + state.dragon.now.terrain + '">' + state.dragon.now.terrain + '</a></td></tr>' + //--
             '</table>' + //--
             '<br>' + //--
             '<br><tr><td>Personality: </td><td><br>' + state.dragon.now.personality + '</td></tr>' + //--
             '<br><br><tr><td>Ideals: </td><td><br>' + state.dragon.now.ideal + '</td></tr>' + //--
-            '<br><br><tr><td>Connections: </td><td><br>' + state.dragon.now.connection + '</td></tr>' + //--
-            '<br><br><tr><td>Hoard: </td><td>' + state.dragon.now.hoard + '</td></tr><br><br>' + //--
+            '<br><br><tr><td>Connections: </td><td><br>' + state.dragon.now.connection + '</td></tr><br>' + //--
             '<div style="text-align:center;"><a ' + astyle2 + '" href="!create,?{Terrain?|Desert|Arctic|Mountain|Forest|Swamp|Plains|Random}">Create a Dragon</a></div>' + //--
             '<div style="text-align:center;"><a ' + astyle2 + '" href="!setlist">Roll Personality</a></div>' + //--
+            '<div style="text-align:center;"><a ' + astyle2 + '" href=!setname">Generate Name</a></div>' + //--
             '<br>' + //--
             '<div style="text-align:center;"><a ' + astyle2 + '" href="!showdragon">Show Dragon</a></div>' + //--
             '</div>'
@@ -168,9 +169,7 @@ var Dragoncreator = Dragoncreator || (function() {
             '<br><br>Ideals:<br>' + //--
             '' + state.dragon.now.ideal + //--
             '<br><br>Connections:<br>' + //--
-            '' + state.dragon.now.connection + //--
-            '<br><br>Hoard:' + //--
-            '' + state.dragon.now.hoard
+            '' + state.dragon.now.connection
         );
     },
     
@@ -298,24 +297,28 @@ var Dragoncreator = Dragoncreator || (function() {
         state.dragon.now.size=size;
     },
     
-    setname = function() {
-        var gender=state.dragon.now.gender;
-        var firstnamelist="Aero,Alae,Andusk,Arauth,Aryz,Auntyr,Ciym,Eir,Endar,Ethar,Fel,Gaul,Guth,Ix,Kerin,Malae,Marun,Mere,Nur,Nym,Raali,Rith,Ser,Skad,Surr,Thal,Thoth,Thriin,Tratain,Umer,Uxin,Vaer,Vala,Voar,Zyreph";
-        var lastnamelist;
-        if (String(gender)=="Male") {
-            firstnamelist+=",Tilrat,Golbin,Baldroit,Korgo,Nakass,Xeoldreoss,Tildrer,Gramri,Mennot,Thralan,Cheznol,Azellaf,Throlandraf,Grenstarg,Fezos,Fastorgath,Meradrath,Alistax,Caspadan,Thonungarg,Fastangrok,Astel,Omnimovux,Renos,Fanorg,Thilindrios,Narzarg,Thrargellaex,Sozir,Naklorvalar,Zanstitran,Fanak,Lartarg,Thrasperg,Thanstok,Vorlgangrog,Ferdin,Ostox,Vorzos,Chiralgrin,Kardin,Nathnar,Figrastogus,Chanorg,Gaurath,Senux,Zonarvax,Vaurden,Daluf,Solorg,Irguth,Raznerg,Olex,Shilan,Ronel,Fargur,Gaklon,Vorgin,Forladal,Voner,Doklonsir,Thergodor,Aredir,Nerdax,Cenoth,Alerg";
-            lastnamelist="The Wild,The Butcher,The Cursed,The Enormous,The Aggressor,The Immortal,The Ancient,The Dark,Blackwing,Shadowwing,Frostwing,The Eternal,The Razor,The Great,The Enigma,The Calm,The Seducer,The Corruptor,The Charming,The Vengeful,The Cunning,Wildfangs,Stormtooth,Dawnroar,The Vicious,Grimback,Mindripper,Greatclaw,The Hunter,The Butcher,Mooncutter,Thunderback,Silvertooth,Sunbreaker,The Silent,Nightforger,Sunroar,The Destroyer,Stormspeaker";
+    setname = function(name) {
+        if (!name) {
+            var gender=state.dragon.now.gender;
+            var firstnamelist="Aero,Alae,Andusk,Arauth,Aryz,Auntyr,Ciym,Eir,Endar,Ethar,Fel,Gaul,Guth,Ix,Kerin,Malae,Marun,Mere,Nur,Nym,Raali,Rith,Ser,Skad,Surr,Thal,Thoth,Thriin,Tratain,Umer,Uxin,Vaer,Vala,Voar,Zyreph";
+            var lastnamelist;
+            if (String(gender)=="Male") {
+                firstnamelist+=",Tilrat,Golbin,Baldroit,Korgo,Nakass,Xeoldreoss,Tildrer,Gramri,Mennot,Thralan,Cheznol,Azellaf,Throlandraf,Grenstarg,Fezos,Fastorgath,Meradrath,Alistax,Caspadan,Thonungarg,Fastangrok,Astel,Omnimovux,Renos,Fanorg,Thilindrios,Narzarg,Thrargellaex,Sozir,Naklorvalar,Zanstitran,Fanak,Lartarg,Thrasperg,Thanstok,Vorlgangrog,Ferdin,Ostox,Vorzos,Chiralgrin,Kardin,Nathnar,Figrastogus,Chanorg,Gaurath,Senux,Zonarvax,Vaurden,Daluf,Solorg,Irguth,Raznerg,Olex,Shilan,Ronel,Fargur,Gaklon,Vorgin,Forladal,Voner,Doklonsir,Thergodor,Aredir,Nerdax,Cenoth,Alerg";
+                lastnamelist="The Wild,The Butcher,The Cursed,The Enormous,The Aggressor,The Immortal,The Ancient,The Dark,Blackwing,Shadowwing,Frostwing,The Eternal,The Razor,The Great,The Enigma,The Calm,The Seducer,The Corruptor,The Charming,The Vengeful,The Cunning,Wildfangs,Stormtooth,Dawnroar,The Vicious,Grimback,Mindripper,Greatclaw,The Hunter,The Butcher,Mooncutter,Thunderback,Silvertooth,Sunbreaker,The Silent,Nightforger,Sunroar,The Destroyer,Stormspeaker";
+            } else {
+                firstnamelist+=",Cisa,Chinsi,Ezmi,Irne,Ynis,Cama,Muzna,Emi,Skirmi,Ryna,Rirna,Asa,Rusra,Zuna,Cirwi,Skala,Cymis,Kara,Tara,Zyri,Zirma,Ulaka,Celis,Mysa,Iri,Irmara,Ruma,Kirna,Izna,Scira,Scyma,Rami,Masrora,Thumi,Ysra,Tusra,Tulis,Ceni,Tysre,Kurila,Nemala,Skynar,Chisa,Ami,Atsemi,Casra,Cira,Nyladi,Cyrella,Tami,Rasri,Kina,Vyrna";
+                lastnamelist="The Wild,The Bewitching,The Immortal,The Dark,The Charming,Lady of the Lake,Lady of the Desert,Lady of the Skies,Lady of the Water,The Proud,Blackwing,Shadowwing,Frostwing,The Seducing,The Cunning,Wildfangs,Stormfang,Stormtooth,Dawnroar,Mindripper,Greatclaw,Mooncutter,Thunderback,Stormback,Sunbreaker";
+            }
+            var firstlist=firstnamelist.split(',');
+            var lastlist=lastnamelist.split(',');
+            var firstrand=randomInteger(firstlist.length+1);
+            var lastrand=randomInteger(lastlist.length+1);
+            var firstname=firstlist[firstrand-1];
+            var lastname=lastlist[lastrand-1];
+            state.dragon.now.name=firstname+' '+lastname;
         } else {
-            firstnamelist+=",Cisa,Chinsi,Ezmi,Irne,Ynis,Cama,Muzna,Emi,Skirmi,Ryna,Rirna,Asa,Rusra,Zuna,Cirwi,Skala,Cymis,Kara,Tara,Zyri,Zirma,Ulaka,Celis,Mysa,Iri,Irmara,Ruma,Kirna,Izna,Scira,Scyma,Rami,Masrora,Thumi,Ysra,Tusra,Tulis,Ceni,Tysre,Kurila,Nemala,Skynar,Chisa,Ami,Atsemi,Casra,Cira,Nyladi,Cyrella,Tami,Rasri,Kina,Vyrna";
-            lastnamelist="The Wild,The Bewitching,The Immortal,The Dark,The Charming,Lady of the Lake,Lady of the Desert,Lady of the Skies,Lady of the Water,The Proud,Blackwing,Shadowwing,Frostwing,The Seducing,The Cunning,Wildfangs,Stormfang,Stormtooth,Dawnroar,Mindripper,Greatclaw,Mooncutter,Thunderback,Stormback,Sunbreaker";
+            state.dragon.now.name=name;
         }
-        var firstlist=firstnamelist.split(',');
-        var lastlist=lastnamelist.split(',');
-        var firstrand=randomInteger(firstlist.length+1);
-        var lastrand=randomInteger(lastlist.length+1);
-        var firstname=firstlist[firstrand-1];
-        var lastname=lastlist[lastrand-1];
-        state.dragon.now.name=firstname+' '+lastname;
     },
     
     setgender = function(gender) {
