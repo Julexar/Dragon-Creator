@@ -115,6 +115,10 @@ var Dragoncreator = Dragoncreator || (function() {
 		        case '!showdragon':
 		            showdragon();
 		            break;
+		        case '!sethoard':
+		            sethoard();
+		            creatormenu();
+		            break;
 		    }
 		}
     },
@@ -142,9 +146,11 @@ var Dragoncreator = Dragoncreator || (function() {
             '<br><tr><td>Personality: </td><td><br>' + state.dragon.now.personality + '</td></tr>' + //--
             '<br><br><tr><td>Ideals: </td><td><br>' + state.dragon.now.ideal + '</td></tr>' + //--
             '<br><br><tr><td>Connections: </td><td><br>' + state.dragon.now.connection + '</td></tr><br>' + //--
+            '<br><tr><td>Hoard: </td><td><br>' + state.dragon.now.hoard + '</td></tr><br>' + //--
             '<div style="text-align:center;"><a ' + astyle2 + '" href="!create,?{Terrain?|Desert|Arctic|Mountain|Forest|Swamp|Plains|Random}">Create a Dragon</a></div>' + //--
             '<div style="text-align:center;"><a ' + astyle2 + '" href="!setlist">Roll Personality</a></div>' + //--
-            '<div style="text-align:center;"><a ' + astyle2 + '" href=!setname">Generate Name</a></div>' + //--
+            '<div style="text-align:center;"><a ' + astyle2 + '" href="!setname">Generate Name</a></div>' + //--
+            '<div style="text-align:center;"><a ' + astyle2 + '" href="!sethoard">Generate Hoard</a></div>' + //--
             '<br>' + //--
             '<div style="text-align:center;"><a ' + astyle2 + '" href="!showdragon">Show Dragon</a></div>' + //--
             '</div>'
@@ -169,7 +175,9 @@ var Dragoncreator = Dragoncreator || (function() {
             '<br><br>Ideals:<br>' + //--
             '' + state.dragon.now.ideal + //--
             '<br><br>Connections:<br>' + //--
-            '' + state.dragon.now.connection
+            '' + state.dragon.now.connection + //--
+            '<br><br>Hoard:<br>' + //--
+            '' + state.dragon.now.hoard
         );
     },
     
@@ -831,6 +839,440 @@ var Dragoncreator = Dragoncreator || (function() {
         state.dragon.now.personality=personality;
         state.dragon.now.ideal=ideal;
         state.dragon.now.connection=connection;
+    },
+    
+    sethoard = function() {
+        var money=getmoney();
+        var gems=getgems();
+        var art=getart();
+        var mundane=getmundane();
+        var magic=getmagic();
+        state.dragon.now.hoard=money+"<br>"+gems+"<br>"+art+"<br>"+mundane+"<br>"+magic;
+    },
+    
+    getmoney = function() {
+        var size=state.dragon.now.size;
+        var pp=0;
+        var gp=0;
+        var sp=0;
+        var cp=0;
+        if (size=="Wyrmling") {
+            for (let i=0;i<12;i++) {
+                cp+=(randomInteger(6)*100);
+            }
+            for (let i=0;i<6;i++) {
+                sp+=(randomInteger(6)*100);
+            }
+            for (let i=0;i<4;i++) {
+                gp+=(randomInteger(6)*10);
+            }
+        } else if (size=="Young") {
+            for (let i=0;i<12;i++) {
+                cp+=(randomInteger(6)*100);
+            }
+            for (let i=0;i<4;i++) {
+                sp+=(randomInteger(6)*1000);
+            }
+            for (let i=0;i<12;i++) {
+                gp+=(randomInteger(6)*100);
+            }
+            for (let i=0;i<6;i++) {
+                pp+=(randomInteger(6)*10);
+            }
+        } else if (size=="Adult") {
+            for (let i=0;i<12;i++) {
+                cp+=(randomInteger(6)*100);
+            }
+            for (let i=0;i<4;i++) {
+                sp+=(randomInteger(6)*1000);
+            }
+            for (let i=0;i<8;i++) {
+                gp+=(randomInteger(6)*1000);
+            }
+            for (let i=0;i<10;i++) {
+                pp+=(randomInteger(6)*100);
+            }
+        } else if (size=="Ancient") {
+            for (let i=0;i<12;i++) {
+                cp+=(randomInteger(6)*100);
+            }
+            for (let i=0;i<4;i++) {
+                sp+=(randomInteger(6)*1000);
+            }
+            for (let i=0;i<6;i++) {
+                gp+=(randomInteger(6)*10000);
+            }
+            for (let i=0;i<12;i++) {
+                pp+=(randomInteger(6)*1000);
+            }
+        }
+        var money="<br>"+pp+" PP<br>"+gp+" GP<br>"+sp+" SP<br>"+cp+" CP<br>";
+        return money;
+    },
+    
+    getmundane = function() {
+        var mundanelist="A painting by an artist long forgotten by everyone except the dragon,4;A hogshead (large cask) containing 65 gallons of clean drinking water,8;Several embroidered throw pillows depicting wyrmling dragons,12;A funerary urn containing remains the dragon can\’t identify,16;A set of seven candlesticks bearing a god\’s holy symbol,20;A tarnished brazier with pleasant-smelling ash,24;A drum for use in religious rites with a foreboding echo to its beat,28;A stuffed Monstrosity appropriate to the local terrain,32;The skull of a Fiend or Celestial,36;A spinning wheel,40;An hourglass filled with sparkling sand,44;A crude flute with a pleasing sound,48;Hundreds or thousands of fake coins interspersed with the real treasure,52;A treatise on alchemy etched on steel cylinders,56;The battle standard of one of the dragon\’s ancient foes,60;A sketchbook from another world of the Material Plane depicting unfamiliar creatures and one very familiar dragon,64;A set of irregular polyhedral dice (with 9 13 25 and 34 sides),68;A map showing the dragon\’s lair in relation to villages and other long-gone landmarks,72;A kneeling bench which anyone addressing the dragon is required to use,76;A scroll containing a long epic poem in praise of the dragon,80;A star chart showing Bahamut and a one-headed Tiamat as constellations with >>Elegy for the First World<< written between the stars,84;A large noisy wind chime,88;A small shrine with a statuette - a brazier - and an altar dedicated to a god worshiped by many of the dragon\’s minions,92;A jar with a dead illithid tadpole floating in preserving chemicals,96;An extensive historical record in the form of carefully knotted strings";
+        var size=state.dragon.now.size;
+        var munamount=0;
+        var mundaneitem="";
+        if (size=="Wyrmling") {
+            munamount+=randomInteger(6);
+        } else if (size=="Young") {
+            munamount=randomInteger(8);
+        } else if (size=="Adult") {
+            munamount+=randomInteger(6);
+            munamount+=randomInteger(6);
+        } else if (size=="Ancient") {
+            munamount+=randomInteger(8);
+            munamount+=randomInteger(8);
+        }
+        mundanelist=String(mundanelist.split(';'));
+        mundanelist=mundanelist.split(',');
+        for (let i=0;i<munamount;i++) {
+            var rand=randomInteger(100);
+            for (let j=1;j<mundanelist.length;j+=2) {
+                if (rand<=mundanelist[j]) {
+                    mundaneitem+="<br>"+mundanelist[j-1];
+                }
+            }
+        }
+        return mundaneitem;
+    },
+    
+    getgems = function() {
+        var size=state.dragon.now.size;
+        var gemamount=0;
+        var gemlist;
+        if (size=="Wyrmling") {
+            gemlist="10,43;50,99;100,100";
+            gemamount+=randomInteger(8);
+            gemamount+=randomInteger(8);
+        } else if (size=="Young") {
+            gemlist="10,51;50,75;100,99;500,100";
+            for (let i=0;i<6;i++) {
+                gemamount+=randomInteger(6);
+            }
+        } else if (size=="Adult") {
+            gemlist="10,18;50,36;100,54;500,77;1000,99;5000,100";
+            for (let i=0;i<6;i++) {
+                gemamount+=randomInteger(6);
+            }
+        } else if (size=="Ancient") {
+            gemlist="10,14;50,28;100,42;500,58;1000,93;5000,100";
+            for (let i=0;i<6;i++) {
+                gemamount+=randomInteger(6);
+            }
+        }
+        var gem1=0;
+        var gem2=0;
+        var gem3=0;
+        var gem4=0;
+        var gem5=0;
+        var gem6=0;
+        gemlist=String(gemlist.split(';'));
+        gemlist=gemlist.split(',');
+        var rand=randomInteger(100);
+        for (let i=0;i<gemamount;i++) {
+            if (rand<=gemlist[1]) {
+                gem1+=1;
+            } else if (rand<=gemlist[3]) {
+                gem2+=1;
+            } else if (rand<=gemlist[5]) {
+                gem3+=1;
+            } else if (rand<=gemlist[7]) {
+                gem4+=1;
+            } else if (rand<=gemlist[9]) {
+                gem5+=1;
+            } else if (rand<=gemlist[11]) {
+                gem6+=1;
+            } else {
+                rand=randomInteger(100);
+            }
+        }
+        var gems1="";
+        var gems2="";
+        var gems3="";
+        var gems4="";
+        var gems5="";
+        var gems6="";
+        if (gem1>=1) {
+            if (gem1==1) {
+                gems1="<br>"+gem1+" Gem worth "+gemlist[0]+" GP";
+            } else {
+                gems1="<br>"+gem1+" Gems worth "+gemlist[0]+" GP";
+            }
+        }
+        if (gem2>=1) {
+            if (gem2==1) {
+                gems2="<br>"+gem2+" Gem worth "+gemlist[2]+" GP";
+            } else {
+                gems3="<br>"+gem2+" Gems worth "+gemlist[2]+" GP";
+            }
+        }
+        if (gem3>=1) {
+            if (gem3==1) {
+                gems3="<br>"+gem3+" Gem worth "+gemlist[4]+" GP";
+            } else {
+                gems3="<br>"+gem3+" Gems worth "+gemlist[4]+" GP";
+            }
+        }
+        if (gem4>=1) {
+            if (gem4==1) {
+                gems4="<br>"+gem4+" Gem worth "+gemlist[6]+" GP";
+            } else {
+                gems4="<br>"+gem4+" Gems worth "+gemlist[6]+" GP";
+            }
+        }
+        if (gem5>=1) {
+            if (gem5==1) {
+                gems5="<br>"+gem5+" Gem worth "+gemlist[8]+" GP";
+            } else {
+                gems5="<br>"+gem5+" Gems worth "+gemlist[8]+" GP";
+            }
+        }
+        if (gem6>=1) {
+            if (gem6==1) {
+                gems6="<br>"+gem6+" Gem worth "+gemlist[10]+" GP";
+            } else {
+                gems6="<br>"+gem6+" Gems worth "+gemlist[10]+" GP";
+            }
+        }
+        var gems="";
+        if (!gems1=="") {
+            gems+=gems1;
+        }
+        if (!gems2=="") {
+            gems+=gems2;
+        }
+        if (!gems3=="") {
+            gems+=gems3;
+        }
+        if (!gems4=="") {
+            gems+=gems4;
+        }
+        if (!gems5=="") {
+            gems+=gems5;
+        }
+        if (!gems6=="") {
+            gems+=gems6;
+        }
+        return gems;
+    },
+    
+    getart = function() {
+        var size=state.dragon.now.size;
+        var artlist;
+        var artamount=0;
+        var arts="";
+        var art1=0;
+        var art2=0;
+        var art3=0;
+        var art4=0;
+        var art5=0;
+        if (size=="Wyrmling") {
+            artlist="25,95;250,100";
+            artamount=randomInteger(4);
+        } else if (size=="Young") {
+            artlist="25,53;250,99;750,100";
+            artamount+=randomInteger(4);
+            artamount+=randomInteger(4);
+        } else if (size=="Adult") {
+            artlist="25,49;250,75;750,99;2500,100";
+            artamount+=randomInteger(6);
+            artamount+=randomInteger(6);
+            artamount+=randomInteger(6);
+        } else if (size=="Ancient") {
+            artlist="25,22;250,42;750,58;2500,93;7500,100";
+            artamount+=randomInteger(10);
+            artamount+=randomInteger(10);
+        }
+        artlist=String(artlist.split(';'));
+        artlist=artlist.split(',');
+        var rand=randomInteger(100);
+        for (let i=0;i<artamount;i++) {
+            if (rand<=artlist[1]) {
+                art1+=1;
+            } else if (rand<=artlist[3]) {
+                art2+=1;
+            } else if (rand<=artlist[5]) {
+                art3+=1;
+            } else if (rand<=artlist[7]) {
+                art4+=1;
+            } else if (rand<=artlist[9]) {
+                art5+=1;
+            }
+        }
+        if (art1>=1) {
+            if (art1==1) {
+                arts+="<br>"+art1+" Art Object worth "+artlist[0]+" GP";
+            } else {
+                arts+="<br>"+art1+" Art Objects worth "+artlist[0]+" GP";
+            }
+        }
+        if (art2>=1) {
+            if (art2==1) {
+                arts+="<br>"+art2+" Art Object worth "+artlist[2]+" GP";
+            } else {
+                arts+="<br>"+art2+" Art Objects worth "+artlist[2]+" GP";
+            }
+        }
+        if (art3>=1) {
+            if (art3==1) {
+                arts+="<br>"+art3+" Art Object worth "+artlist[4]+" GP";
+            } else {
+                arts+="<br>"+art3+" Art Objects worth "+artlist[4]+" GP";
+            }
+        }
+        if (art4>=1) {
+            if (art4==1) {
+                arts+="<br>"+art4+" Art Object worth "+artlist[6]+" GP";
+            } else {
+                arts+="<br>"+art4+" Art Objects worth "+artlist[6]+" GP";
+            }
+        }
+        if (art5>=1) {
+            if (art5==1) {
+                arts+="<br>"+art5+" Art Object worth "+artlist[8]+" GP";
+            } else {
+                arts+="<br>"+art5+" Art Objects worth "+artlist[8]+" GP";
+            }
+        }
+        return arts;
+    },
+    
+    getmagic = function() {
+        var size=state.dragon.now.size;
+        var magicamount=0;
+        var magiclist;
+        var magicitem="";
+        var listA="Potion of Healing,50;Spell Scroll (Cantrip),60;Potion of Climbing,70;Spell Scroll (1st level),90;Spell Scroll (2nd level),94;Potion of Healing (Greater),98;Bag of Holding,99;Driftglobe,100";
+        var listB="Potion of Healing (Greater),15;Potion of Fire Breath,22;Potion of Resistance,29;+1 Ammunition,34;Potion of Animal Friendship,39;Potion of Hill Giant Strength,44;Potion of Growth,49;Potion of Water Breathing,54;Spell Scroll (2nd level),59;Spell Scroll (3rd level),64;Bag of Holding,67;Keoghtom\’s ointment,70;Oil of Slipperiness,73;Dust of Disappearance,75;Dust of Dryness,77;Dust of Sneezing and Choking,79;Elemental Gem,81;Philter of Love,83;Alchemy Jug,84;Cap of Water Breathing,85;Cloak of the Manta Ray,86;Driftglobe,87;Goggles of Night,88;Helm of Comprehending Languages,89;Immovable Rod,90;Lantern of Revealing,91;Mariner\'s Armor,92;Mithral Armor,93;Potion of Poison,94;Ring of Swimming,95;Robe of useful Items,96;Rope of Climbing,97;Saddle of the Cavalier,98;Wand of Magic Detection,99;Wand of Secrets,100";
+        var listC="Potion of Healing (Superior),15;Spell Scroll (4th level),22;+2 Ammunition,27;Potion of Clairvoyance,32;Potion of Diminution,37;Potion of Gaseous Form,42;Potion of Frost Giant Strength,47;Potion of Stone Giant Strength,52;Potion of Heroism,57;Potion of Invulnerability,62;Potion of Mind reading,67;Spell Scroll (5th level),72;Elixir of health,75;Oil of Etherealness,78;Potion of Fire Giant Strength,81;Quaal\’s Feather Token,84;Scroll of Protection,87;Bag of Beans,89;Bead of Force,91;Chime of Opening,92;Decanter of Endless Water,93;Eyes of minute seeing,94;Folding Boat,95;Heward\’s Handy Haversack,96;Horseshoes of Speed,97;Necklace of Fireballs,98;Periapt of Health,99;Sending Stones,100";
+        var listD="Potion of Healing (Supreme),20;Potion of Invisibility,30;Potion of Speed,40;Spell Scroll (6th level),50;Spell Scroll (7th level),57;+3 Ammunition,62;Oil of Sharpness,67;Potion of Flying,72;Potion of Cloud Giant Strength,77;Potion of Longevity,82;Potion of Vitality,87;Spell Scroll (8th level),92;Horseshoes of a Zephyr,95;Nolzur\’s Marvelous Pigments,98;Bag of Devouring,99;Portable Hole,100";
+        var listE="Spell Scroll (8th level),30;Potion of Storm Giant Strength,55;Potion of Healing (Supreme),70;Spell Scroll (9th level),85;Universal Solvent,93;Arrow of Slaying,98;Soverign Glue,100";
+        var listF="+1 Weapon,15;+1 Shield,18;Sentinel Shield,21;Amulet of Proof against Detection and Location,23;Boots of Elvenkind,25;Boots of Striding and Springing,27;Bracers of Archery,29;Brooch of Shielding,31;Broom of Flying,33;Cloak of Elvenkind,25;Cloak of Protection,37;Gauntlets of Ogre Power,39;Hat of Disguise,41;Javelin of Lightning,43;Pearl of Power,45;+1 Rod of the Pact Keeper,47;Slippers of Spider Climbing,49;Staff of the Adder,51;Staff of the Python,53;Sword of Vengeance,55;Trident of Fish Command,57;Wand of Magic Missiles,59;+1 Wand of the War Mage,61;Wand of Web,63;Weapon of Warning,65;Adamantine Armor (Chain Mail),66;Adamantine Armor (Chain Shirt),67;Adamantine Armor (Scale Mail),68;Bag of Tricks (grey),69;Bag of Tricks (rust),70;Bag of Tricks (tan),71;Boots of the Winterlands,72;Circlet of Blasting,73;Deck of Illusions,74;Eversmoking Bottle,75;Eyes of Charming,76;Eyes of the Eagle,77;Figurine of Wondrous Power (Silver Raven),78;Gem of Brightness,79;Gloves of Missile Snaring,80;Gloves of Swimming and Climbing,81;Gloves of Thievery,82;Headband of Intellect,83;Helm of Telepathy,84;Instrument of the Bards (Doss lute),85;Instrument of the Bards (Fochlucan bandore),86;Instrument of the Bards (Mac-Fuirmidh cittern),87;Medallion of Thoughts,88;Necklace of Adaptation,89;Periapt of Wound Closure,90;Pipes of Haunting,91;Pipes of the Sewers,92;Ring of Jumping,93;Ring of Mind Shielding,94;Ring of Warmth,95;Ring of Water Walking,96;Quiver of Ehlonna,97;Stone of Good Luck (Luckstone),98;Wind Fan,99;Winged Boots,100";
+        var listG="+2 Weapon,11;Figurine of Wondrous Power (roll 1d8),14;Adamantine Armor (Breastplate),15;Adamantine Armor (Splint),16;Amulet of Health,17;Armor of Vulnerability,18;Arrow-Catching Shield,19;Belt of Dwarvenkind,20;Belt of Hill Giant Strength,21;Berserker Axe,22;Boots of Levitation,23;Boots of Speed,24;Bowl of Commanding Water Elementals,25;Bracers of Defense,26;Brazier of Commanding Fire Elementals,27;Cape of the Mountebank,28;Censer of Controlling Air Elementals,29;+1 Chain Mail,30;Armor of Resistance (Chain Mail),31;+1 Chain Shirt,32;Armor of Resistance (Chain Shirt),33;Cloak of Displacement,34;Cloak of the Bat,35;Cube of Force,36;Daern\’s Instant Fortress,37;Dagger of Venom,38;Dimensional Shackles,39;Dragon Slayer,40;Elven Chain,41;Flame Tongue,42;Gem of Seeing,43;Giant Slayer,44;Glamoured Studded Leather,45;Helm of Teleportation,46;Horn of Blasting,47;Horn of Valhalla (Silver or Brass),48;Instrument of the Bards (Canaith Mandolin),49;Instrument of the Bards (Cli lyre),50;Ioun Stone (Awareness),51;Ioun Stone (Protection),52;Ioun Stone (Reserve),53;Ioun Stone (Sustenance),54;Iron Bands of Bilarro,55;+1 Leather Armor,56;Armor of Resistance (Leather),57;Mace of Disruption,58;Mace of Smiting,59;Mace of Terror,60;Mantle of Spell Resistance,61;Necklace of Prayer Beads,62;Periapt of Proof against Poison,63;Ring of Animal Influence,64;Ring of Evasion,65;Ring of Feather Falling,66;Ring of Free Action,67;Ring of Protection,68;Ring of Resistance,69;Ring of Spell Storing,70;Ring of the Ram,71;Ring of X-Ray Vision,72;Robe of Eyes,73;Rod of Rulership,74;+2 Rod of the Pact Keeper,75;Rope of Entanglement,76;+1 Scale Mail,77;Armor of Resistance (Scale Mail),78;+2 Shield,79;Shield of Missile Attraction,80;Staff of Charming,81;Staff of Healing,82;Staff of Swarming Insects,83;Staff of the Woodlands,84;Staff of Withering,85;Stone of Controlling Earth Elementals,86;Sun Blade,87;Sword of Life Stealing,88;Sword of Wounding,89;Tentacle Rod,90;Vicious Weapon,91;Wand of Binding,92;Wand of Enemy Detection,93;Wand of Fear,94;Wand of Fireballs,95;Wand of Lightning Bolts,96;Wand of Paralysis,97;+2 Wand of the War Mage,98;Wand of Wonder,99;Wings of Flying,100";
+        var listH="+3 Weapon,10;Amulet of the Planes,12;Carpet of Flying,14;Crystal Ball (very rare version),16;Ring of Regeneration,18;Ring of Shooting Stars,20;Ring of Telekinesis,22;Robe of Scintillating Colors,24;Robe of Stars,26;Rod of Absorption,28;Rod of Alertness,30;Rod of Security,32;+3 Rod of the Pact Keeper,34;Scimitar of Speed,36;+3 Shield,38;Staff of Fire,40;Staff of Frost,42;Staff of Power,44;Staff of Striking,46;Staff of Thunder and Lightning,48;Sword of Sharpness,50;Wand of Polymorph,52;+3 Wand of the War Mage,54;Adamantine Armor (Half Plate),55;Adamantine Armor (Plate),56;Animated Shield,57;Belt of Fire Giant Strength,58;Belt of Frost Giant Strength (or stone),59;+1 Breastplate,60;Armor of Resistance (Breastplate),61;Candle of Invocation,62;+2 chain mail,63;+2 Chain Shirt,64;Cloak of Arachnida,65;Dancing Sword,66;Demon Armor,67;Dragon Scale Mail,68;Dwarven Plate,69;Dwarven Thrower,70;Efreeti Bottle,71;Figurine of Wondrous Power (obsidian steed),72;Frost Brand,73;Helm of Brilliance,74;Horn of Valhalla (bronze),75;Instrument of the Bards (Anstruth harp),76;Ioun Stone (Absorption),77;Ioun Stone (Agility),78;Ioun Stone (Fortitude),79;Ioun Stone (Insight),80;Ioun Stone (Intellect),81;Ioun Stone (Leadership),82;Ioun Stone (Strength),83;+2 Leather Armor,84;Manual of Bodily Health,85;Manual of Gainful Exercise,86;Manual of Golems,87;Manual of Quickness of Action,88;Mirror of Life Trapping,89;Nine Lives Stealer,90;Oathbow,91;+2 Scale Mail,92;Spellguard Shield,93;+1 Splint Armor,94;Armor of Resistance (Splint),95;+1 Studded Leather,96;Armor of Resistance (Studded Leather),97;Tome of Clear Thought,98;Tome of Leadership and Influence,99;Tome of Understanding,100";
+        var listI="Defender,5;Hammer of Thunderbolts,10;Luck Blade,15;Sword of Answering,20;Holy Avenger,23;Ring of Djinni Summoning,26;Ring of Invisibility,29;Ring of Spell Turning,32;Rod of Lordly Might,35;Staff of the Magi,38;Vorpal Sword,41;Belt of Cloud Giant Strength,43;+2 Breastplate,45;+3 Chain Mail,47;+3 Chain Shirt,49;Cloak of Invisibility,51;Crystal Ball (legendary version),53;+1 Half Plate,55;Iron Flask,57;+3 Leather Armor,59;+1 Plate Armor,61;Robe of the Archmagi,63;Rod of Resurrection,65;+1 Scale Mail,67;Scarab of Protection,69;+2 Splint Armor,71;+2 Studded Leather,73;Well of Many Worlds,75;Magic Armor (roll d12),76;Apparatus of Kwalish,77;Armor of Invulnerability,78;Belt of Storm Giant Strength,79;Cubic Gate,80;Deck of Many Things,81;Efreeti Chain,82;Armor of Resistance (Half Plate),83;Horn of Valhalla (Iron),84;Instrument of the Bards (Ollamh harp),85;Ioun Stone (Greater Absorption),86;Ioun Stone (Mastery),87;Ioun Stone (Regeneration),88;Plate Armor of Etherealness,89;Armor of Resistance (Plate),90;Ring of Air Elemental Command,91;Ring of Earth Elemental Command,92;Ring of Fire Elemental Command,93;Ring of Three Wishes,94;Ring of Water Elemental Command,95;Sphere of Annihilation,96;Talisman of Pure Good,97;Talisman of the Sphere,98;Talisman of Ultimate Evil,99;Tome of the Stilled Tongue,100";
+        listA=String(listA.split(';'));
+        listA=listA.split(',');
+        listB=String(listB.split(';'));
+        listB=listB.split(',');
+        listC=String(listC.split(';'));
+        listC=listC.split(',');
+        listD=String(listD.split(';'));
+        listD=listD.split(',');
+        listE=String(listE.split(';'));
+        listE=listE.split(',');
+        listF=String(listF.split(';'));
+        listF=listF.split(',');
+        listG=String(listG.split(';'));
+        listG=listG.split(',');
+        listH=String(listH.split(';'));
+        listH=listH.split(',');
+        listI=String(listI.split(';'));
+        listI=listI.split(',');
+        if (size=="Wyrmling") {
+            magicamount=randomInteger(8);
+        } else if (size=="Young") {
+            magicamount=randomInteger(8);
+        } else if (size=="Adult") {
+            magicamount=randomInteger(8);
+        } else if (size=="Ancient") {
+            magicamount=randomInteger(6);
+            magicamount=randomInteger(6);
+        }
+        for (let i=0;i<magicamount;i++) {
+            var magicrand=randomInteger(100);
+            if (size=="Wyrmling") {
+                if (magicrand<=34) {
+                    magiclist=listA;
+                } else if (magicrand<=61) {
+                    magiclist=listB;
+                } else if (magicrand<=77) {
+                    magiclist=listC;
+                } else if (magicrand<=96) {
+                    magiclist=listF;
+                } else if (magicrand<=100) {
+                    magiclist=listG;
+                }
+                var rand=randomInteger(100);
+                for (let j=1;j<magiclist.length;j+=2) {
+                    if (rand<=magiclist[j]) {
+                        magicitem+="<br>"+magiclist[j-1];
+                    }
+                }
+            } else if (size=="Young") {
+                if (magicrand<=21) {
+                    magiclist=listA;
+                } else if (magicrand<=49) {
+                    magiclist=listB;
+                } else if (magicrand<=64) {
+                    magiclist=listC;
+                } else if (magicrand<=72) {
+                    magiclist=listD;
+                } else if (magicrand<=91) {
+                    magiclist=listF;
+                } else if (magicrand<=97) {
+                    magiclist=listG;
+                } else if (magicrand<=100) {
+                    magiclist=listH;
+                }
+                var rand=randomInteger(100);
+                for (let j=1;j<magiclist.length;j+=2) {
+                    if (rand<=magiclist[j]) {
+                        magicitem+="<br>"+magiclist[j-1];
+                    }
+                }
+            } else if (size=="Adult") {
+                if (magicrand<=6) {
+                    magiclist=listA;
+                } else if (magicrand<=18) {
+                    magiclist=listB;
+                } else if (magicrand<=41) {
+                    magiclist=listC;
+                } else if (magicrand<=64) {
+                    magiclist=listD;
+                } else if (magicrand<=69) {
+                    magiclist=listE;
+                } else if (magicrand<=72) {
+                    magiclist=listF;
+                } else if (magicrand<=80) {
+                    magiclist=listG;
+                } else if (magicrand<=91) {
+                    magiclist=listH;
+                } else if (magicrand<=100) {
+                    magiclist=listI;
+                }
+                var rand=randomInteger(100);
+                for (let j=1;j<magiclist.length;j+=2) {
+                    if (rand<=magiclist[j]) {
+                        magicitem+="<br>"+magiclist[j-1];
+                    }
+                }
+            } else if (size=="Ancient") {
+                if (magicrand<=12) {
+                    magiclist=listC;
+                } else if (magicrand<=56) {
+                    magiclist=listD;
+                } else if (magicrand<=67) {
+                    magiclist=listE;
+                } else if (magicrand<=73) {
+                    magiclist=listG;
+                } else if (magicrand<=82) {
+                    magiclist=listH;
+                } else if (magicrand<=100) {
+                    magiclist=listI;
+                }
+                var rand=randomInteger(100);
+                for (let j=1;j<magiclist.length;j+=2) {
+                    if (rand<=magiclist[j]) {
+                        magicitem+="<br>"+magiclist[j-1];
+                    }
+                }
+            }
+        }
+        return magicitem;
     },
     
     checkInstall = function() {
