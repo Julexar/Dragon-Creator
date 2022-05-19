@@ -965,115 +965,103 @@ var Dragoncreator = Dragoncreator || (function() {
                 gemamount+=randomInteger(6);
             }
         }
-        var gem1=0;
-        var gem2=0;
-        var gem3=0;
-        var gem4=0;
-        var gem5=0;
-        var gem6=0;
         gemlist=String(gemlist.split(';'));
         gemlist=gemlist.split(',');
-        var rand=randomInteger(100);
+        var gemtypes;
+        var gems=[];
+        var gemvalue;
+        var typeamount;
         for (let i=0;i<gemamount;i++) {
-            if (rand<=gemlist[1]) {
-                gem1+=1;
-            } else if (rand<=gemlist[3]) {
-                gem2+=1;
-            } else if (rand<=gemlist[5]) {
-                gem3+=1;
-            } else if (rand<=gemlist[7]) {
-                gem4+=1;
-            } else if (rand<=gemlist[9]) {
-                gem5+=1;
-            } else if (rand<=gemlist[11]) {
-                gem6+=1;
-            } else {
-                rand=randomInteger(100);
+            var rand=randomInteger(100);
+            for (let j=1;j<gemlist.length;j+=2) {
+                if (rand<=gemlist[j]) {
+                    gemvalue=Number(gemlist[j-1]);
+                    j=gemlist.length;
+                }
+            }
+            if (gemvalue==10) {
+                gemtypes="Azurite;Banded agate;Blue quartz;Eye agate;Hematite;Lapis lazuli;Malachite;Moss agate;Obsidian;Rhodochrosite;Tiger eye;Turquoise";
+                typeamount="0;0;0;0;0;0;0;0;0;0;0;0";
+                gemtypes=gemtypes.split(';');
+                typeamount=typeamount.split(';');
+                var gemrand=randomInteger(12);
+                typeamount[gemrand-1]=String(Number(typeamount[gemrand-1])+1);
+                for (let j=0;j<gemtypes.length;j++) {
+                    gems[j]=gemtypes[j]+","+typeamount[j]+":"+gemvalue;
+                }
+            } else if (gemvalue==50) {
+                gemtypes="Bloodstone;Carnelian;Chalcedony;Chrysoprase;Citrine;Jasper;Moonstone;Onyx;Quartz;Sardonyx;Star rose quartz;Zircon";
+                typeamount="0;0;0;0;0;0;0;0;0;0;0;0";
+                gemtypes=gemtypes.split(';');
+                typeamount=typeamount.split(';');
+                var gemrand=randomInteger(12);
+                typeamount[gemrand-1]=String(Number(typeamount[gemrand-1])+1);
+                for (let j=0;j<gemtypes.length;j++) {
+                    gems[j+12]=gemtypes[j]+","+typeamount[j]+":"+gemvalue;
+                }
+            } else if (gemvalue==100) {
+                gemtypes="Amber;Amethyst;Chrysoberyl;Coral;Garnet;Jade;Jet;Pearl;Spinel;Tourmaline";
+                typeamount="0;0;0;0;0;0;0;0;0;0";
+                gemtypes=gemtypes.split(';');
+                typeamount=typeamount.split(';');
+                var gemrand=randomInteger(10);
+                typeamount[gemrand-1]=String(Number(typeamount[gemrand-1])+1);
+                for (let j=0;j<gemtypes.length;j++) {
+                    gems[j+24]=gemtypes[j]+","+typeamount[j]+":"+gemvalue;
+                }
+            } else if (gemvalue==500) {
+                gemtypes="Alexandrite;Aquamarine;Black pearl;Blue spinel;Peridot;Topaz";
+                typeamount="0;0;0;0;0;0";
+                gemtypes=gemtypes.split(';');
+                typeamount=typeamount.split(';');
+                var gemrand=randomInteger(6);
+                typeamount[gemrand-1]=String(Number(typeamount[gemrand-1])+1);
+                for (let j=0;j<gemtypes.length;j++) {
+                    gems[j+34]=gemtypes[j]+","+typeamount[j]+":"+gemvalue;
+                }
+            } else if (gemvalue==1000) {
+                gemtypes="Black opal;Blue sapphire;Emerald;Fire opal;Opal;Star ruby;Star sapphire;Yellow sapphire";
+                typeamount="0;0;0;0;0;0;0;0";
+                gemtypes=gemtypes.split(';');
+                typeamount=typeamount.split(';');
+                var gemrand=randomInteger(8);
+                typeamount[gemrand-1]=String(Number(typeamount[gemrand-1])+1);
+                for (let j=0;j<gemtypes.length;j++) {
+                    gems[j+40]=gemtypes[j]+","+typeamount[j]+":"+gemvalue;
+                }
+            } else if (gemvalue==5000) {
+                gemtypes="Black sapphire;Diamond;Jacinth;Ruby";
+                typeamount="0;0;0;0";
+                gemtypes=gemtypes.split(';');
+                typeamount=typeamount.split(';');
+                var gemrand=randomInteger(4);
+                typeamount[gemrand-1]=String(Number(typeamount[gemrand-1])+1);
+                for (let j=0;j<gemtypes.length;j++) {
+                    gems[j+48]=gemtypes[j]+","+typeamount[j]+":"+gemvalue;
+                }
             }
         }
-        var gems1="";
-        var gems2="";
-        var gems3="";
-        var gems4="";
-        var gems5="";
-        var gems6="";
-        if (gem1>=1) {
-            if (gem1==1) {
-                gems1="<br>"+gem1+" Gem worth "+gemlist[0]+" GP";
-            } else {
-                gems1="<br>"+gem1+" Gems worth "+gemlist[0]+" GP";
+        gems=String(gems);
+        gems=String(gems.split(';'));
+        gems=String(gems.split(','));
+        gems=String(gems.split(':'));
+        gems=gems.split(',');
+        var finalgems="";
+        for (let i=1;i<gems.length;i+=3) {
+            if (gems[i]>=1) {
+                finalgems+="<br>"+gems[i]+"x "+gems[i-1]+" worth "+gems[i+1]+" GP each.";
             }
         }
-        if (gem2>=1) {
-            if (gem2==1) {
-                gems2="<br>"+gem2+" Gem worth "+gemlist[2]+" GP";
-            } else {
-                gems3="<br>"+gem2+" Gems worth "+gemlist[2]+" GP";
-            }
-        }
-        if (gem3>=1) {
-            if (gem3==1) {
-                gems3="<br>"+gem3+" Gem worth "+gemlist[4]+" GP";
-            } else {
-                gems3="<br>"+gem3+" Gems worth "+gemlist[4]+" GP";
-            }
-        }
-        if (gem4>=1) {
-            if (gem4==1) {
-                gems4="<br>"+gem4+" Gem worth "+gemlist[6]+" GP";
-            } else {
-                gems4="<br>"+gem4+" Gems worth "+gemlist[6]+" GP";
-            }
-        }
-        if (gem5>=1) {
-            if (gem5==1) {
-                gems5="<br>"+gem5+" Gem worth "+gemlist[8]+" GP";
-            } else {
-                gems5="<br>"+gem5+" Gems worth "+gemlist[8]+" GP";
-            }
-        }
-        if (gem6>=1) {
-            if (gem6==1) {
-                gems6="<br>"+gem6+" Gem worth "+gemlist[10]+" GP";
-            } else {
-                gems6="<br>"+gem6+" Gems worth "+gemlist[10]+" GP";
-            }
-        }
-        var gems="";
-        if (!gems1=="") {
-            gems+=gems1;
-        }
-        if (!gems2=="") {
-            gems+=gems2;
-        }
-        if (!gems3=="") {
-            gems+=gems3;
-        }
-        if (!gems4=="") {
-            gems+=gems4;
-        }
-        if (!gems5=="") {
-            gems+=gems5;
-        }
-        if (!gems6=="") {
-            gems+=gems6;
-        }
-        return gems;
+        return finalgems;
     },
     
     getart = function() {
         var size=state.dragon.now.size;
         var artlist;
         var artamount=0;
-        var arts="";
-        var art1=0;
-        var art2=0;
-        var art3=0;
-        var art4=0;
-        var art5=0;
         if (size=="Wyrmling") {
             artlist="25,95;250,100";
-            artamount=randomInteger(4);
+            artamount+=randomInteger(4);
         } else if (size=="Young") {
             artlist="25,53;250,99;750,100";
             artamount+=randomInteger(4);
@@ -1090,56 +1078,82 @@ var Dragoncreator = Dragoncreator || (function() {
         }
         artlist=String(artlist.split(';'));
         artlist=artlist.split(',');
-        var rand=randomInteger(100);
+        var artobjects;
+        var arts=[];
+        var artvalue;
+        var objectamount;
         for (let i=0;i<artamount;i++) {
-            if (rand<=artlist[1]) {
-                art1+=1;
-            } else if (rand<=artlist[3]) {
-                art2+=1;
-            } else if (rand<=artlist[5]) {
-                art3+=1;
-            } else if (rand<=artlist[7]) {
-                art4+=1;
-            } else if (rand<=artlist[9]) {
-                art5+=1;
+            var rand=randomInteger(100);
+            for (let j=1;j<artlist.length;j++) {
+                if (rand<=artlist[j]) {
+                    artvalue=Number(artlist[j-1]);
+                    j=artlist.length;
+                }
+            }
+            if (artvalue==25) {
+                artobjects="Silver ewer;Carved bone statuette;Small gold bracelet;Cloth-of-gold vestment;Black velvet mask stitched with silver thread;Copper chalice with silver filigree;Pair of engraved bone dice;Small mirror set in a painted wooden frame;Embroidered silk handkerchief;Gold locket with a painted portrait inside";
+                artobjects=artobjects.split(';');
+                objectamount="0;0;0;0;0;0;0;0;0;0";
+                objectamount=objectamount.split(';');
+                var artrand=randomInteger(10);
+                objectamount[artrand-1]=String(Number(objectamount[artrand-1])+1);
+                for (let j=0;j<artobjects.length;j++) {
+                    arts[j]=artobjects[j]+","+String(objectamount[j])+":"+artvalue;
+                }
+            } else if (artvalue==250) {
+                artobjects="Gold ring set with bloodstones;Carved ivory statuette;Large gold bracelet;Silver necklace with a gemstone pendant;Bronze crown;Silk robe with gold embroidery;Large well-made tapestry;Brass mug with jade inlay;Box of turqoise animal figurines;Gold bird cage with electrum filigree";
+                objectamount="0;0;0;0;0;0;0;0;0;0";
+                artobjects=artobjects.split(';');
+                objectamount=objectamount.split(';');
+                var artrand=randomInteger(10);
+                objectamount[artrand-1]=String(Number(objectamount[artrand-1])+1);
+                for (let j=0;j<artobjects.length;j++) {
+                    arts[j+10]=artobjects[j]+","+String(objectamount[j])+":"+artvalue;
+                }
+            } else if (artvalue==750) {
+                artobjects="Silver chalice set with moonstones;Silver-plated steel longsword with jet set in hilt;Carved harp of exotic wood with ivory inlay and zircon gems;Small gold idol;Gold dragon comb set with red garnets as eyes;Bottle stopper cork embossed with gold leaf and set with amethysts;Ceremonial electrum dagger with a black pearl in the pommel;Silver and gold brooch;Obsidian statuette with gold fittings and inlay;Painted gold war mask";
+                objectamount="0;0;0;0;0;0;0;0;0;0";
+                artobjects=artobjects.split(';');
+                objectamount=objectamount.split(';');
+                var artrand=randomInteger(10);
+                objectamount[artrand-1]=String(Number(objectamount[artrand-1])+1);
+                for (let j=0;j<artobjects.length;j++) {
+                    arts[j+20]=artobjects[j]+","+String(objectamount[j])+":"+artvalue;
+                }
+            } else if (artvalue==2500) {
+                artobjects="Fine gold chain set with a fire opal;Old masterpiece painting;Embroidered silk and velvet mantle set with numerous moonstones;Platinum bracelet set with a sapphire;Embroidered glove set with jewel chips;Jeweled anklet;Gold music box;Gold circlet set with four aquamarines;Eye patch with a moch eye set in blue sapphire and moonstone;A necklace string of small pink pearls";
+                objectamount="0;0;0;0;0;0;0;0;0;0";
+                artobjects=artobjects.split(';');
+                objectamount=objectamount.split(';');
+                var artrand=randomInteger(10);
+                objectamount[artrand-1]=String(Number(objectamount[artrand-1])+1);
+                for (let j=0;j<artobjects.length;j++) {
+                    arts[j+30]=artobjects[j]+","+String(objectamount[j])+":"+artvalue;
+                }
+            } else if (artvalue==7500) {
+                artobjects="Jeweled gold crown;Jeweled platinum ring;Small gold statuette set with rubies;Gold cup set with emeralds;Gold jewelry boy with platinum filigree;Painted gold child\'s sarcophagus;Jade game board with solid gold playing pieces;Bejeweledivory drinking horn with gold filigree";
+                objectamount="0;0;0;0;0;0;0;0";
+                artobjects=artobjects.split(';');
+                objectamount=objectamount.split(';');
+                var artrand=randomInteger(8);
+                objectamount[artrand-1]=String(Number(objectamount[artrand-1])+1);
+                for (let j=0;j<artobjects.length;j++) {
+                    arts[j+40]=artobjects[j]+","+String(objectamount[j])+":"+artvalue;
+                }
             }
         }
-        if (art1>=1) {
-            if (art1==1) {
-                arts+="<br>"+art1+" Art Object worth "+artlist[0]+" GP";
-            } else {
-                arts+="<br>"+art1+" Art Objects worth "+artlist[0]+" GP";
+        arts=String(arts);
+        arts=String(arts.split(';'));
+        arts=String(arts.split(','));
+        arts=String(arts.split(':'));
+        arts=arts.split(',');
+        var finalart="";
+        for (let i=1;i<arts.length;i+=3) {
+            if (Number(arts[i])>=1) {
+                finalart+="<br>"+arts[i]+"x "+arts[i-1]+" worth "+arts[i+1]+" GP each.";
             }
         }
-        if (art2>=1) {
-            if (art2==1) {
-                arts+="<br>"+art2+" Art Object worth "+artlist[2]+" GP";
-            } else {
-                arts+="<br>"+art2+" Art Objects worth "+artlist[2]+" GP";
-            }
-        }
-        if (art3>=1) {
-            if (art3==1) {
-                arts+="<br>"+art3+" Art Object worth "+artlist[4]+" GP";
-            } else {
-                arts+="<br>"+art3+" Art Objects worth "+artlist[4]+" GP";
-            }
-        }
-        if (art4>=1) {
-            if (art4==1) {
-                arts+="<br>"+art4+" Art Object worth "+artlist[6]+" GP";
-            } else {
-                arts+="<br>"+art4+" Art Objects worth "+artlist[6]+" GP";
-            }
-        }
-        if (art5>=1) {
-            if (art5==1) {
-                arts+="<br>"+art5+" Art Object worth "+artlist[8]+" GP";
-            } else {
-                arts+="<br>"+art5+" Art Objects worth "+artlist[8]+" GP";
-            }
-        }
-        return arts;
+        return finalart;
     },
     
     getmagic = function() {
@@ -1202,7 +1216,7 @@ var Dragoncreator = Dragoncreator || (function() {
                 for (let j=1;j<magiclist.length;j+=2) {
                     if (rand<=magiclist[j]) {
                         magicitem+="<br>"+magiclist[j-1];
-                        break;
+                        j=magiclist.length;
                     }
                 }
             } else if (size=="Young") {
@@ -1225,7 +1239,7 @@ var Dragoncreator = Dragoncreator || (function() {
                 for (let j=1;j<magiclist.length;j+=2) {
                     if (rand<=magiclist[j]) {
                         magicitem+="<br>"+magiclist[j-1];
-                        break;
+                        j=magiclist.length;
                     }
                 }
             } else if (size=="Adult") {
@@ -1252,7 +1266,7 @@ var Dragoncreator = Dragoncreator || (function() {
                 for (let j=1;j<magiclist.length;j+=2) {
                     if (rand<=magiclist[j]) {
                         magicitem+="<br>"+magiclist[j-1];
-                        break;
+                        j=magiclist.length;
                     }
                 }
             } else if (size=="Ancient") {
@@ -1273,7 +1287,7 @@ var Dragoncreator = Dragoncreator || (function() {
                 for (let j=1;j<magiclist.length;j+=2) {
                     if (rand<=magiclist[j]) {
                         magicitem+="<br>"+magiclist[j-1];
-                        break;
+                        j=magiclist.length;
                     }
                 }
             }
