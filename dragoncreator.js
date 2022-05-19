@@ -158,27 +158,12 @@ var Dragoncreator = Dragoncreator || (function() {
     },
     
     showdragon = function() {
-        var divstyle = 'style="width: 220px; border: 1px solid black; background-color: #ffffff; padding: 5px;"'
-        var tablestyle = 'style="text-align:center;"';
-        var arrowstyle = 'style="border: none; border-top: 3px solid transparent; border-bottom: 3px solid transparent; border-left: 220px solid rgb(126, 45, 64); margin-bottom: 2px; margin-top: 2px;"';
-        var headstyle = 'style="color: rgb(126, 45, 64); font-size: 18px; text-align: left; font-variant: small-caps; font-family: Times, serif;"';
-        var substyle = 'style="font-size: 11px; line-height: 13px; margin-top: -3px; font-style: italic;"';
-        sendChat("Dragon Creator", "/w gm " + '<div ' + divstyle + '>' + //--
-            '<div ' + headstyle + '>' + state.dragon.now.name + '</div>' + //--
-            '<div ' + substyle + '>Pretty View</div>' + //--
-            '<div ' + arrowstyle + '></div>' + //--
-            '<br>Gender: ' + state.dragon.now.gender + //--
-            '<br><br>Type & Size: ' + state.dragon.now.size + ' ' + state.dragon.now.type + ' Dragon' + //--
-            '<br><br>Terrain: ' + state.dragon.now.terrain + //--
-            '<br><br>Personality:<br>' + //--
-            '' + state.dragon.now.personality + //--
-            '<br><br>Ideals:<br>' + //--
-            '' + state.dragon.now.ideal + //--
-            '<br><br>Connections:<br>' + //--
-            '' + state.dragon.now.connection + //--
-            '<br><br>Hoard:<br>' + //--
-            '' + state.dragon.now.hoard
-        );
+        var dragtext="Gender: "+state.dragon.now.gender+"<br><br>Type & Size: "+state.dragon.now.size+" "+state.dragon.now.type+" Dragon<br><br>Terrain: "+state.dragon.now.terrain+"<br><br>Personality: <br>"+state.dragon.now.personality+"<br><br>Ideals: <br>"+state.dragon.now.ideal+"<br><br>Connections: <br>"+state.dragon.now.connection+"<br><br>Hoard: <br>"+state.dragon.now.hoard;
+        var handout = createObj("handout",{
+            name: state.dragon.now.name
+        });
+        handout.set('notes',dragtext);
+        
     },
     
     create = function(terrain) {
