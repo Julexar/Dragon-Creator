@@ -13,6 +13,6 @@
 | 1.6 - Name Update   | :white_check_mark: |
 
 
-## Reporting a Vulnerability
+## Reporting a Bug
 
-If you find a vulnerability or an issue with the code, please tell us in the Issues Tab. Errors found on unsupported Versions will not be fixed as they have most likely already been fixed.
+If you find a bug or an issue with the code, please tell us in the Issues Tab. Errors found on unsupported Versions will not be fixed as they have most likely already been fixed.
