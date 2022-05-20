@@ -15,4 +15,4 @@
 
 ## Reporting a Bug
 
-If you find a bug or an issue with the code, please tell us in https://github.com/Julexar/dragoncreator-dnd/issues. Errors found on unsupported Versions will not be fixed as they have most likely already been fixed.
+If you find a bug or an issue with the code, please tell us in <https://github.com/Julexar/dragoncreator-dnd/issues>. Errors found on unsupported Versions will not be fixed as they have most likely already been fixed.
