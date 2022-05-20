@@ -292,23 +292,30 @@ var Dragoncreator = Dragoncreator || (function() {
     
     setname = function(name) {
         if (!name) {
-            var gender=state.dragon.now.gender;
-            var firstnamelist="Aero,Alae,Andusk,Arauth,Aryz,Auntyr,Ciym,Eir,Endar,Ethar,Fel,Gaul,Guth,Ix,Kerin,Malae,Marun,Mere,Nur,Nym,Raali,Rith,Ser,Skad,Surr,Thal,Thoth,Thriin,Tratain,Umer,Uxin,Vaer,Vala,Voar,Zyreph";
-            var lastnamelist;
-            if (String(gender)=="Male") {
-                firstnamelist+=",Tilrat,Golbin,Baldroit,Korgo,Nakass,Xeoldreoss,Tildrer,Gramri,Mennot,Thralan,Cheznol,Azellaf,Throlandraf,Grenstarg,Fezos,Fastorgath,Meradrath,Alistax,Caspadan,Thonungarg,Fastangrok,Astel,Omnimovux,Renos,Fanorg,Thilindrios,Narzarg,Thrargellaex,Sozir,Naklorvalar,Zanstitran,Fanak,Lartarg,Thrasperg,Thanstok,Vorlgangrog,Ferdin,Ostox,Vorzos,Chiralgrin,Kardin,Nathnar,Figrastogus,Chanorg,Gaurath,Senux,Zonarvax,Vaurden,Daluf,Solorg,Irguth,Raznerg,Olex,Shilan,Ronel,Fargur,Gaklon,Vorgin,Forladal,Voner,Doklonsir,Thergodor,Aredir,Nerdax,Cenoth,Alerg";
-                lastnamelist="The Wild,The Butcher,The Cursed,The Enormous,The Aggressor,The Immortal,The Ancient,The Dark,Blackwing,Shadowwing,Frostwing,The Eternal,The Razor,The Great,The Enigma,The Calm,The Seducer,The Corruptor,The Charming,The Vengeful,The Cunning,Wildfangs,Stormtooth,Dawnroar,The Vicious,Grimback,Mindripper,Greatclaw,The Hunter,The Butcher,Mooncutter,Thunderback,Silvertooth,Sunbreaker,The Silent,Nightforger,Sunroar,The Destroyer,Stormspeaker";
-            } else {
-                firstnamelist+=",Cisa,Chinsi,Ezmi,Irne,Ynis,Cama,Muzna,Emi,Skirmi,Ryna,Rirna,Asa,Rusra,Zuna,Cirwi,Skala,Cymis,Kara,Tara,Zyri,Zirma,Ulaka,Celis,Mysa,Iri,Irmara,Ruma,Kirna,Izna,Scira,Scyma,Rami,Masrora,Thumi,Ysra,Tusra,Tulis,Ceni,Tysre,Kurila,Nemala,Skynar,Chisa,Ami,Atsemi,Casra,Cira,Nyladi,Cyrella,Tami,Rasri,Kina,Vyrna";
-                lastnamelist="The Wild,The Bewitching,The Immortal,The Dark,The Charming,Lady of the Lake,Lady of the Desert,Lady of the Skies,Lady of the Water,The Proud,Blackwing,Shadowwing,Frostwing,The Seducing,The Cunning,Wildfangs,Stormfang,Stormtooth,Dawnroar,Mindripper,Greatclaw,Mooncutter,Thunderback,Stormback,Sunbreaker";
+            var namelist1="Aeros;Andra;Arauth;Auntyr;Calaun;Dalagh;Endar;Gaul;Ix;Lham;Mere;Nur;Othim;Rith;Skad;Thoth;Tratain;Umer;Vala;Vureem";
+            var namelist2="Agha;Andusk;Arveia;Auth;Ciym;Durg;Ethar;Golos;Iyliam;Lothtor;Miir;Nym;Palar;Rysear;Surr;Thrax;Treori;Uryte;Valos;Waur";
+            var namelist3="Akkan;Angkar;Aryz;Bahr;Claug;Eir;Fel;Guth;Jhar;Malae;Morn;Oloth;Raali;Saryx;Thal;Thriin;Uxin;Vinc;Zundae";
+            var namelist4="Alae;Aradace;Atar;Bala;Daerev;Elden;Galad;Ingeir;Kerin;Marun;Nabal;Ontor;Ragoth;Ser;Thanach;Tostyn;Ualin;Vaer;Voar;Zyreph";
+            namelist1=namelist1.split(';');
+            namelist2=namelist2.split(';');
+            namelist3=namelist3.split(';');
+            namelist4=namelist4.split(';');
+            var namelist;
+            name="";
+            for (let i=0;i<4;i++) {
+                if (i==0) {
+                    namelist=namelist1;
+                } else if (i==1) {
+                    namelist=namelist2;
+                } else if (i==2) {
+                    namelist=namelist3;
+                } else if (i==3) {
+                    namelist=namelist4;
+                }
+                var rand=randomInteger(namelist.length);
+                name+=String(namelist[rand-1])+" ";
             }
-            var firstlist=firstnamelist.split(',');
-            var lastlist=lastnamelist.split(',');
-            var firstrand=randomInteger(firstlist.length+1);
-            var lastrand=randomInteger(lastlist.length+1);
-            var firstname=firstlist[firstrand-1];
-            var lastname=lastlist[lastrand-1];
-            state.dragon.now.name=firstname+' '+lastname;
+            state.dragon.now.name=name;
         } else {
             state.dragon.now.name=name;
         }
