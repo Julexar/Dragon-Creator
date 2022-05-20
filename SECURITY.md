@@ -10,6 +10,7 @@
 | 1.3   | :x: |
 | 1.4   | :white_check_mark: |
 | 1.5 - Handout Update | :white_check_mark: |
+| 1.6 - Name Update   | :white_check_mark: |
 
 
 ## Reporting a Vulnerability
